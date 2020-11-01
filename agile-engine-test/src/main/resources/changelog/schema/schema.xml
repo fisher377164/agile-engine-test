@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="Andrii_Vdovychenko" id="20201101195930">
+        <sql dbms="postgresql, h2" endDelimiter="\n" splitStatements="true" stripComments="true">
+            CREATE TABLE accounts
+            (
+            account_id INTEGER NOT NULL,
+            name       CHAR(255),
+            balance    bigint  NOT NULL default 0,
+            PRIMARY KEY (account_id)
+            );
+            <comment>Add accounts table</comment>
+        </sql>
+    </changeSet>
+
+    <changeSet author="Andrii_Vdovychenko" id="20201101195931">
+        <sql dbms="postgresql, h2" endDelimiter="\n" splitStatements="true" stripComments="true">
+            create table if not exists payment_transactions
+            (
+            id             bigint auto_increment,
+            transaction_id char(36)    not null
+            constraint uq_payment_transaction_id unique,
+            account_id     bigint      not null,
+            type           varchar(10) not null,
+            amount         bigint      not null,
+            created_at     timestamp   not null,
+            PRIMARY KEY (id),
+            constraint fk_payment_transactions_account_id foreign key (account_id) references accounts (account_id)
+            );
+        </sql>
+        <comment>Add payment_transactions table</comment>
+    </changeSet>
+</databaseChangeLog>
