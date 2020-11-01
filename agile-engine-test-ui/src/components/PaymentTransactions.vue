@@ -57,7 +57,7 @@ export default {
       this.getPaymentTransactions();
     },
     getPaymentTransactions: function () {
-      axios.get(`http://localhost:8081/api/payment_transaction?pageIndex=${this.page}&pageSize=10`)
+      axios.get(`http://52.47.96.181:8081/api/payment_transaction?pageIndex=${this.page}&pageSize=10`)
           .then(response => this.paymentTransactions = response.data)
           .catch(error => {
             if (error.response) {
